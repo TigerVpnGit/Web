@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تایگر وی‌پی‌ان | Tiger VPN - اینترنت آزاد، پرسرعت و هوشمند</title>
+    <!-- فونت وزیرمتن برای تایپوگرافی استاندارد فارسی -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- آیکون‌های مدرن Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- تیلویند CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        tiger: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            blue: '#0284c7',
+                            cyan: '#06b6d4',
+                            dark: '#0f172a'
+                        }
+                    },
+                    boxShadow: {
+                        'chain': '0px 10px 35px rgba(2, 132, 199, 0.08)',
+                        'chain-hover': '0px 20px 45px rgba(249, 115, 22, 0.16)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* مقیاس‌بندی هوشمند برای موبایل، تبلت، دسکتاپ و تلویزیون‌های هوشمند (Smart TV) */
+        html {
+            font-size: clamp(14px, 1vw + 4px, 20px);
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* امواج گرادینت الهام گرفته از Chain App Dev */
+        .hero-bg-wave {
+            background: linear-gradient(135deg, #0284c7 0%, #06b6d4 52%, #f97316 100%);
+            border-bottom-left-radius: 35% 12%;
+            border-bottom-right-radius: 65% 22%;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-bg-wave {
+                border-bottom-left-radius: 45% 18%;
+                border-bottom-right-radius: 55% 28%;
+            }
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        /* انیمیشن شناور برای المان‌های گرافیکی */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        .animate-float {
+            animation: floatSlow 4.5s ease-in-out infinite;
+        }
+
+        /* استایل اختصاصی کارت‌های سرویس مشابه Chain App Dev */
+        .service-card {
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0284c7 0%, #f97316 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.35s ease;
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            color: #ffffff;
+        }
+        .service-card:hover .card-desc {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .service-card:hover .icon-box {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        /* فوکوس واضح برای کنترل از راه دور تلویزیون هوشمند (D-Pad / TV Remote) */
+        button:focus-visible, a:focus-visible, input:focus-visible {
+            outline: 3px solid #f97316;
+            outline-offset: 3px;
+        }
+
+        /* استایل نمایشگر بخش‌های قابل ویرایش کاربر */
+        .editable-placeholder {
+            border-bottom: 1px dashed rgba(249, 115, 22, 0.45);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-orange-500 selection:text-white">
+
+    <!-- =================================================================
+         ۱. نوار ناوبری (Header & Responsive Navbar)
+    ================================================================== -->
+    <header id="navbar" class="fixed top-0 inset-x-0 z-50 glass-nav border-b border-slate-200/70 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- لوگو تایگر وی‌پی‌ان -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-600 via-cyan-500 to-orange-500 p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+                            <!-- آیکون اختصاصی SVG تایگر -->
+                            <svg class="w-7 h-7" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 18L22 10L28 16H36L42 10L50 18L54 32L44 50L32 56L20 50L10 32L14 18Z" fill="url(#tigerGrad)"/>
+                                <path d="M22 28L27 30L22 32V28ZM42 28L37 30L42 32V28Z" fill="#0F172A"/>
+                                <path d="M28 40L32 43L36 40M32 43V48" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M16 26H21M43 26H48M15 33H20M44 33H49" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="tigerGrad" x1="10" y1="10" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#FB923C"/>
+                                        <stop offset="0.55" stop-color="#F97316"/>
+                                        <stop offset="1" stop-color="#0EA5E9"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-black text-xl tracking-tight bg-gradient-to-l from-sky-600 to-orange-500 bg-clip-text text-transparent">TIGER VPN</span>
+                        <span class="block text-[11px] font-semibold text-slate-500 -mt-1">تایگر وی‌پی‌ان | اتصال بی‌مرز</span>
+                    </div>
+                </a>
+
+                <!-- منوی دسکتاپ و تلویزیون -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-bold text-slate-700">
+                    <a href="#home" class="hover:text-orange-500 transition-colors">خانه</a>
+                    <a href="#features" class="hover:text-orange-500 transition-colors">ویژگی‌ها</a>
+                    <a href="#pricing" class="hover:text-orange-500 transition-colors">تعرفه‌ها و خرید</a>
+                    <a href="#apps" class="hover:text-orange-500 transition-colors">دانلود اپلیکیشن‌ها</a>
+                    <a href="#ecosystem" class="hover:text-orange-500 transition-colors">پشتیبانی و ارتباط</a>
+                </nav>
+
+                <!-- دکمه‌های عملیاتی هدر -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="openCheckoutModal('اشتراک ویژه ۱ ماهه', 149000, 'تک کاربره')" class="px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-orange-500 hover:from-sky-500 hover:to-orange-600 shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                        <i class="ph-bold ph-shopping-bag text-lg"></i>
+                        <span>خرید اشتراک / پنل کاربری</span>
+                    </button>
+                </div>
+
+                <!-- دکمه منوی موبایل و تبلت -->
+                <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-orange-100 hover:text-orange-600 transition-colors" aria-label="منو">
+                    <i class="ph-bold ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- کشوی منوی موبایل -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-6 space-y-3 shadow-xl">
+            <a href="#home" class="block py-2 px-3 rounded-xl font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600">خانه</a>
+            <a href="#features" class="block py-2 px-3 rounded-xl font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600">ویژگی‌ها</a>
+            <a href="#pricing" class="block py-2 px-3 rounded-xl font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600">تعرفه‌ها و خرید آنلاین</a>
+            <a href="#apps" class="block py-2 px-3 rounded-xl font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600">دانلود اپلیکیشن‌ها</a>
+            <a href="#ecosystem" class="block py-2 px-3 rounded-xl font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600">پشتیبانی و کانال تلگرام</a>
+            <div class="pt-2">
+                <button onclick="openCheckoutModal('اشتراک ویژه ۱ ماهه', 149000, 'تک کاربره')" class="w-full py-3 rounded-2xl font-bold text-white bg-gradient-to-r from-sky-600 to-orange-500 shadow-md flex items-center justify-center gap-2">
+                    <i class="ph-bold ph-rocket-launch"></i>
+                    <span>خرید اشتراک / ورود به پنل</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =================================================================
+         ۲. بخش اصلی (Hero Section با طراحی Chain App Dev)
+    ================================================================== -->
+    <section id="home" class="relative pt-28 pb-20 lg:pt-36 lg:pb-28 hero-bg-wave text-white overflow-hidden">
+        <!-- پترن نقطه‌ای پس‌زمینه -->
+        <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px); background-size: 28px 28px;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- ستون متن و دعوت به اقدام -->
+                <div class="lg:col-span-7 text-center lg:text-right space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs sm:text-sm font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-orange-400 animate-ping"></span>
+                        <span>نسل جدید تونل‌های هوشمند ضد محدودیت — نسخه وب‌اپلیکیشن</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black leading-tight">
+                        سرعتِ یک ببر، امنیتِ بی‌رقیب با
+                        <span class="text-amber-300 underline decoration-wavy decoration-orange-400/80 underline-offset-8">تایگر وی‌پی‌ان</span>
+                    </h1>
+
+                    <!-- جایگاه متن قابل ویرایش توسط کاربر -->
+                    <p class="text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl mx-auto lg:mx-0 editable-placeholder pb-2">
+                        [متن دلخواه شما: تجربه اینترنت آزاد، بدون قطعی و با پایین‌ترین پینگ برای گیمینگ، ترید، تماشای فیلم 4K و شبکه‌های اجتماعی روی موبایل، ویندوز، تبلت و تلویزیون هوشمند.]
+                    </p>
+
+                    <!-- دکمه‌های دوگانه (CTA) -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#pricing" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-slate-900 font-extrabold text-base shadow-xl hover:bg-orange-50 hover:scale-105 transition-all flex items-center justify-center gap-2.5">
+                            <i class="ph-fill ph-lightning text-orange-500 text-xl"></i>
+                            <span>خرید آنلاین اشتراک</span>
+                        </a>
+                        <a href="https://t.me/TigerVpnChannel" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-7 py-4 rounded-full bg-slate-950/35 hover:bg-slate-950/55 backdrop-blur-md border border-white/30 text-white font-bold text-base transition-all flex items-center justify-center gap-2.5">
+                            <i class="ph-fill ph-telegram-logo text-sky-300 text-xl"></i>
+                            <span dir="ltr">@TigerVpnChannel</span>
+                        </a>
+                    </div>
+
+                    <!-- آمار سریع و اعتمادسازی -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/20 max-w-lg mx-auto lg:mx-0 text-center lg:text-right">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-amber-300">+۱۵</div>
+                            <div class="text-xs sm:text-sm text-white/80">لوکیشن اختصاصی</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-amber-300">۹۹.۹٪</div>
+                            <div class="text-xs sm:text-sm text-white/80">پایداری و آپتایم</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-amber-300">۲۴/۷</div>
+                            <div class="text-xs sm:text-sm text-white/80">پشتیبانی آنی</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ستون تصویرسازی اختصاصی SVG/CSS از دیوایس‌های متصل و سپر تایگر -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md animate-float">
+                        <!-- کارت شیشه‌ای مرکزی -->
+                        <div class="rounded-3xl bg-white/15 backdrop-blur-xl border border-white/30 p-6 sm:p-8 shadow-2xl">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                                </div>
+                                <span class="text-xs font-mono bg-slate-900/40 px-3 py-1 rounded-full text-cyan-200">TIGER-SHIELD v4.2</span>
+                            </div>
+
+                            <!-- سپر مرکزی تایگر و شبکه دستگاه‌ها -->
+                            <div class="relative py-4 flex flex-col items-center">
+                                <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-orange-500 to-amber-400 p-1 shadow-xl mb-6 flex items-center justify-center">
+                                    <div class="w-full h-full bg-slate-900 rounded-[20px] flex items-center justify-center">
+                                        <i class="ph-fill ph-shield-check text-5xl text-orange-400"></i>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mb-6">
+                                    <div class="text-lg font-extrabold text-white">اتصال رمزنگاری شده برقرار است</div>
+                                    <div class="text-xs text-cyan-200 mt-1 font-mono">Germany • Frankfurt • Ping: 42ms</div>
+                                </div>
+
+                                <!-- آیکون ۴ پلتفرم متصل -->
+                                <div class="grid grid-cols-4 gap-3 w-full">
+                                    <div class="bg-white/15 rounded-2xl p-3 text-center border border-white/20">
+                                        <i class="ph-duotone ph-device-mobile text-2xl text-amber-300"></i>
+                                        <span class="block text-[11px] mt-1 font-bold">موبایل</span>
+                                    </div>
+                                    <div class="bg-white/15 rounded-2xl p-3 text-center border border-white/20">
+                                        <i class="ph-duotone ph-device-tablet text-2xl text-cyan-300"></i>
+                                        <span class="block text-[11px] mt-1 font-bold">تبلت</span>
+                                    </div>
+                                    <div class="bg-white/15 rounded-2xl p-3 text-center border border-white/20">
+                                        <i class="ph-duotone ph-desktop text-2xl text-emerald-300"></i>
+                                        <span class="block text-[11px] mt-1 font-bold">ویندوز</span>
+                                    </div>
+                                    <div class="bg-white/15 rounded-2xl p-3 text-center border border-white/20">
+                                        <i class="ph-duotone ph-television text-2xl text-orange-300"></i>
+                                        <span class="block text-[11px] mt-1 font-bold">تلویزیون</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- بج شناور سرعت -->
+                        <div class="hidden sm:flex items-center gap-3 absolute -bottom-5 -right-5 bg-white text-slate-900 px-4 py-3 rounded-2xl shadow-xl border border-slate-100">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center">
+                                <i class="ph-fill ph-gauge text-2xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500 font-semibold">سرعت دانلود لحظه‌ای</div>
+                                <div class="text-sm font-black text-slate-900" dir="ltr">940 Mbps 🚀</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================================================================
+         ۳. شبکه خدمات و ویژگی‌ها (۴ کارت مدرن مشابه Chain App Dev)
+    ================================================================== -->
+    <section id="features" class="py-20 lg:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <span class="text-sm font-extrabold text-orange-500 tracking-wide uppercase">چرا تایگر وی‌پی‌ان؟</span>
+            <h2 class="text-2xl sm:text-4xl font-black text-slate-900">
+                زیرساخت مهندسی‌شده برای <span class="text-sky-600">حداکثر سرعت و امنیت</span>
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base editable-placeholder inline-block pb-1">
+                [متن دلخواه شما: توضیح کوتاه درباره پروتکل‌های اختصاصی، سرورهای پرقدرت و عبور هوشمند از محدودیت‌ها]
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+            <!-- کارت ۱ -->
+            <div class="service-card bg-white rounded-3xl p-7 shadow-chain border border-slate-100">
+                <div class="icon-box w-14 h-14 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-6 transition-colors">
+                    <i class="ph-duotone ph-game-controller text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-extrabold mb-3">پینگ پایین برای گیم و استریم</h3>
+                <p class="card-desc text-sm text-slate-600 leading-relaxed mb-5 editable-placeholder">
+                    [متن دلخواه شما: سرورهای بهینه‌سازی شده مخصوص بازی‌های آنلاین و تماشای بدون بافر یوتیوب و نتفلیکس.]
+                </p>
+                <a href="#pricing" class="inline-flex items-center gap-1.5 text-sm font-bold text-orange-500 group-hover:text-white">
+                    <span>مشاهده سرورها</span>
+                    <i class="ph-bold ph-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- کارت ۲ -->
+            <div class="service-card bg-white rounded-3xl p-7 shadow-chain border border-slate-100">
+                <div class="icon-box w-14 h-14 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center mb-6 transition-colors">
+                    <i class="ph-duotone ph-devices text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-extrabold mb-3">پشتیبانی از تمامی دستگاه‌ها</h3>
+                <p class="card-desc text-sm text-slate-600 leading-relaxed mb-5 editable-placeholder">
+                    [متن دلخواه شما: سازگاری کامل با آیفون (iOS)، اندروید، ویندوز، مک، تبلت و تلویزیون‌های هوشمند اندروید تی‌وی.]
+                </p>
+                <a href="#apps" class="inline-flex items-center gap-1.5 text-sm font-bold text-orange-500">
+                    <span>دانلود اپلیکیشن‌ها</span>
+                    <i class="ph-bold ph-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- کارت ۳ -->
+            <div class="service-card bg-white rounded-3xl p-7 shadow-chain border border-slate-100">
+                <div class="icon-box w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-6 transition-colors">
+                    <i class="ph-duotone ph-lock-key text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-extrabold mb-3">رمزنگاری نظامی و بدون لاگ</h3>
+                <p class="card-desc text-sm text-slate-600 leading-relaxed mb-5 editable-placeholder">
+                    [متن دلخواه شما: سیاست سخت‌گیرانه عدم ذخیره‌سازی اطلاعات (Zero-Log) و امنیت کامل برای صرافی‌ها و تراکنش‌ها.]
+                </p>
+                <a href="#pricing" class="inline-flex items-center gap-1.5 text-sm font-bold text-orange-500">
+                    <span>اطلاعات امنیتی</span>
+                    <i class="ph-bold ph-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- کارت ۴ -->
+            <div class="service-card bg-white rounded-3xl p-7 shadow-chain border border-slate-100">
+                <div class="icon-box w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-6 transition-colors">
+                    <i class="ph-duotone ph-headset text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-extrabold mb-3">پشتیبانی ۲۴ ساعته و تحویل آنی</h3>
+                <p class="card-desc text-sm text-slate-600 leading-relaxed mb-5 editable-placeholder">
+                    [متن دلخواه شما: دریافت خودکار لینک اشتراک بلافاصله پس از خرید به همراه پشتیبانی سریع در تلگرام و وب.]
+                </p>
+                <a href="https://t.me/TigerVpnChannel" target="_blank" class="inline-flex items-center gap-1.5 text-sm font-bold text-orange-500">
+                    <span>ارتباط با پشتیبانی</span>
+                    <i class="ph-bold ph-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================================================================
+         ۴. بخش فروشگاه و خرید اشتراک آنلاین (Storefront & Pricing)
+    ================================================================== -->
+    <section id="pricing" class="py-20 bg-gradient-to-b from-slate-100/80 to-white border-y border-slate-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+                <span class="px-4 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-extrabold">فروشگاه آنلاین تایگر وی‌پی‌ان</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-slate-900">
+                    انتخاب پلن و <span class="text-orange-500">خرید آنی اشتراک</span>
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base editable-placeholder inline-block">
+                    [متن دلخواه شما: تعرفه‌های شفاف با ضمانت بازگشت وجه و قابلیت تمدید خودکار]
+                </p>
+
+                <!-- انتخاب‌گر تعداد کاربر (تغییر داینامیک قیمت‌ها) -->
+                <div class="pt-4 flex justify-center">
+                    <div class="inline-flex p-1.5 rounded-2xl bg-white shadow-md border border-slate-200" role="group">
+                        <button type="button" onclick="setUserTier(1)" id="tier-1" class="tier-btn px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-sky-600 to-orange-500 text-white shadow">
+                            تک کاربره (۱ دستگاه)
+                        </button>
+                        <button type="button" onclick="setUserTier(2)" id="tier-2" class="tier-btn px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:text-slate-900 transition-all">
+                            دو کاربره (۲ دستگاه)
+                        </button>
+                        <button type="button" onclick="setUserTier(3)" id="tier-3" class="tier-btn px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 hover:text-slate-900 transition-all">
+                            خانواده / VIP (۴ دستگاه)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- کارت‌های تعرفه -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                <!-- پلن ۱ ماهه -->
+                <div class="bg-white rounded-3xl p-8 shadow-chain border border-slate-100 flex flex-col justify-between hover:shadow-chain-hover transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-lg font-extrabold text-slate-800">اشتراک ۱ ماهه</span>
+                            <span class="px-3 py-1 rounded-full bg-sky-50 text-sky-600 text-xs font-bold">اقتصادی</span>
+                        </div>
+                        <div class="my-6 flex items-baseline gap-2">
+                            <span id="price-1m" class="text-4xl font-black text-slate-900">۱۴۹,۰۰۰</span>
+                            <span class="text-sm font-bold text-slate-500">تومان / ماهانه</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>حجم ترافیک: <strong>۵۰ گیگابایت پرسرعت</strong></span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>دسترسی به تمام لوکیشن‌های VIP</span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>مناسب برای همراه اول، ایرانسل و وای‌فای</span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>تحویل آنی لینک هوشمند (Subscription)</span></li>
+                        </ul>
+                    </div>
+                    <button onclick="selectPlanAndCheckout('اشتراک ۱ ماهه تایگر', 'price-1m')" class="w-full py-3.5 rounded-2xl font-extrabold text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-shopping-cart-simple text-lg"></i>
+                        <span>خرید اشتراک ۱ ماهه</span>
+                    </button>
+                </div>
+
+                <!-- پلن ۳ ماهه (پیشنهاد ویژه) -->
+                <div class="relative bg-slate-900 text-white rounded-3xl p-8 shadow-2xl border-2 border-orange-500 flex flex-col justify-between transform md:-translate-y-3">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-black shadow-lg">
+                        پرفروش‌ترین انتخاب کاربران 🔥
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xl font-extrabold">اشتراک ۳ ماهه VIP</span>
+                            <span class="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-bold">۲۰٪ تخفیف</span>
+                        </div>
+                        <div class="my-6 flex items-baseline gap-2">
+                            <span id="price-3m" class="text-4xl sm:text-5xl font-black text-amber-400">۳۵۹,۰۰۰</span>
+                            <span class="text-sm font-bold text-slate-300">تومان / ۳ ماه</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-slate-200 mb-8">
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-orange-400 text-lg"></i><span>حجم ترافیک: <strong>۱۸۰ گیگابایت + هدیه</strong></span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-orange-400 text-lg"></i><span>سرورهای اختصاصی نیم‌بها و تانل قدرتمند</span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-orange-400 text-lg"></i><span>آی‌پی ثابت اختصاصی برای ترید و صرافی</span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-orange-400 text-lg"></i><span>پشتیبانی VIP و تعویض رایگان کانفیگ</span></li>
+                        </ul>
+                    </div>
+                    <button onclick="selectPlanAndCheckout('اشتراک ۳ ماهه VIP تایگر', 'price-3m')" class="w-full py-4 rounded-2xl font-extrabold text-white bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 shadow-lg transition-all flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-crown text-xl"></i>
+                        <span>خرید فوری پلن ۳ ماهه</span>
+                    </button>
+                </div>
+
+                <!-- پلن ۶ ماهه -->
+                <div class="bg-white rounded-3xl p-8 shadow-chain border border-slate-100 flex flex-col justify-between hover:shadow-chain-hover transition-all">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-lg font-extrabold text-slate-800">اشتراک ۶ ماهه طلایی</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-bold">۳۰٪ تخفیف</span>
+                        </div>
+                        <div class="my-6 flex items-baseline gap-2">
+                            <span id="price-6m" class="text-4xl font-black text-slate-900">۶۴۹,۰۰۰</span>
+                            <span class="text-sm font-bold text-slate-500">تومان / ۶ ماه</span>
+                        </div>
+                        <ul class="space-y-3.5 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>حجم ترافیک: <strong>۴۰۰ گیگابایت فوق‌سریع</strong></span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>بدون افت سرعت در ساعات شلوغی شبکه</span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>قابلیت اتصال همزمان روی تلویزیون و موبایل</span></li>
+                            <li class="flex items-center gap-2.5"><i class="ph-fill ph-check-circle text-emerald-500 text-lg"></i><span>گارانتی کامل تا آخرین روز اشتراک</span></li>
+                        </ul>
+                    </div>
+                    <button onclick="selectPlanAndCheckout('اشتراک ۶ ماهه طلایی تایگر', 'price-6m')" class="w-full py-3.5 rounded-2xl font-extrabold text-orange-600 bg-orange-50 hover:bg-orange-500 hover:text-white transition-all flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-shopping-cart-simple text-lg"></i>
+                        <span>خرید اشتراک ۶ ماهه</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================================================================
+         ۵. مرکز دانلود اپلیکیشن‌ها و اتصال هوشمند (موبایل، تبلت، ویندوز، تلویزیون)
+    ================================================================== -->
+    <section id="apps" class="py-20 lg:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+            <span class="text-sm font-extrabold text-sky-600">اتصال در کمتر از ۳۰ ثانیه</span>
+            <h2 class="text-2xl sm:text-4xl font-black text-slate-900">
+                اپلیکیشن‌های پیشنهادی برای <span class="text-orange-500">همه پلتفرم‌ها</span>
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base editable-placeholder inline-block">
+                [متن دلخواه شما: لینک‌های دانلود مستقیم کلاینت‌های رسمی برای آیفون، اندروید، ویندوز و تلویزیون هوشمند]
+            </p>
+        </div>
+
+        <!-- تب‌های انتخاب پلتفرم -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10">
+            <button onclick="switchPlatform('ios')" id="tab-ios" class="platform-tab px-6 py-3 rounded-2xl font-bold text-sm flex items-center gap-2 bg-slate-900 text-white shadow-md transition-all">
+                <i class="ph-fill ph-apple-logo text-xl"></i>
+                <span>آیفون و آیپد (iOS)</span>
+            </button>
+            <button onclick="switchPlatform('android')" id="tab-android" class="platform-tab px-6 py-3 rounded-2xl font-bold text-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:border-orange-400 transition-all">
+                <i class="ph-fill ph-android-logo text-xl text-emerald-500"></i>
+                <span>اندروید و تبلت</span>
+            </button>
+            <button onclick="switchPlatform('windows')" id="tab-windows" class="platform-tab px-6 py-3 rounded-2xl font-bold text-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:border-orange-400 transition-all">
+                <i class="ph-fill ph-windows-logo text-xl text-sky-500"></i>
+                <span>ویندوز و مک</span>
+            </button>
+            <button onclick="switchPlatform('tv')" id="tab-tv" class="platform-tab px-6 py-3 rounded-2xl font-bold text-sm flex items-center gap-2 bg-white text-slate-700 border border-slate-200 hover:border-orange-400 transition-all">
+                <i class="ph-fill ph-television text-xl text-orange-500"></i>
+                <span>تلویزیون هوشمند (Smart TV)</span>
+            </button>
+        </div>
+
+        <!-- محتوای تب انتخاب شده -->
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-chain border border-slate-100">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-5" id="platformContent">
+                    <!-- محتوای پیش‌فرض iOS -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold">
+                        <i class="ph-fill ph-sparkle"></i>
+                        <span>پیشنهاد ویژه تایگر برای آیفون و آیپد</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900">اتصال هوشمند با اپلیکیشن Happ و Streisand</h3>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed editable-placeholder">
+                        [متن دلخواه شما: پس از دریافت لینک اشتراک تایگر وی‌پی‌ان، کافی است یکی از برنامه‌های زیر را از اپ‌استور نصب کرده و لینک خود را با یک کلیک وارد کنید.]
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <a href="#" onclick="showToast('لینک دانلود Happ از App Store آماده جایگذاری است')" class="p-4 rounded-2xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50/40 transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center font-black">H</div>
+                                <div>
+                                    <div class="font-extrabold text-slate-900">Happ Proxy Utility</div>
+                                    <div class="text-xs text-slate-500">نسخه رسمی App Store</div>
+                                </div>
+                            </div>
+                            <i class="ph-bold ph-download-simple text-xl text-orange-500"></i>
+                        </a>
+                        <a href="#" onclick="showToast('لینک دانلود Streisand آماده جایگذاری است')" class="p-4 rounded-2xl border border-slate-200 hover:border-sky-500 hover:bg-sky-50/40 transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-xl bg-sky-600 text-white flex items-center justify-center font-black">S</div>
+                                <div>
+                                    <div class="font-extrabold text-slate-900">Streisand</div>
+                                    <div class="text-xs text-slate-500">پشتیبانی از تمام پروتکل‌ها</div>
+                                </div>
+                            </div>
+                            <i class="ph-bold ph-download-simple text-xl text-sky-600"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- پیش‌نمایش لینک اشتراک هوشمند (Subscription Link Box) -->
+                <div class="lg:col-span-5 bg-slate-950 text-white rounded-3xl p-6 sm:p-7 border border-slate-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-orange-400">نمونه لینک هوشمند تایگر (Sub-Link)</span>
+                        <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[11px] font-mono">ACTIVE</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">
+                        با کپی کردن لینک اشتراک اختصاصی خود، لیست تمامی سرورهای تایگر به‌صورت خودکار در برنامه شما آپدیت می‌شود:
+                    </p>
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between gap-2 mb-4">
+                        <code id="demoSubLink" class="text-xs text-cyan-300 truncate" dir="ltr">https://sub.tigervpn.example/api/v1/client/subscribe?token=TIGER2026</code>
+                        <button onclick="copySubLink()" class="shrink-0 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold transition-colors">
+                            کپی لینک
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-slate-400">
+                        <i class="ph-fill ph-qr-code text-2xl text-amber-400"></i>
+                        <span>قابلیت اسکن سریع QR Code روی تلویزیون هوشمند و گوشی دوم</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================================================================
+         ۶. فوتر، اکوسیستم برند و لینک‌های ارتباطی
+    ================================================================== -->
+    <footer id="ecosystem" class="bg-slate-950 text-slate-300 pt-16 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+                <!-- ستون معرفی تایگر وی‌پی‌ان -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-orange-500 flex items-center justify-center text-white font-black text-xl">
+                            T
+                        </div>
+                        <span class="text-xl font-black text-white">TIGER VPN</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed editable-placeholder">
+                        [متن دلخواه شما: تایگر وی‌پی‌ان ارائه‌دهنده راهکارهای نوین دسترسی آزاد به اینترنت با بالاترین استانداردهای امنیتی و سرعت.]
+                    </p>
+                </div>
+
+                <!-- لینک‌های دسترسی سریع -->
+                <div>
+                    <h4 class="text-white font-extrabold mb-4">دسترسی سریع</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#home" class="hover:text-orange-400 transition-colors">صفحه اصلی</a></li>
+                        <li><a href="#features" class="hover:text-orange-400 transition-colors">امکانات و سرورها</a></li>
+                        <li><a href="#pricing" class="hover:text-orange-400 transition-colors">تعرفه‌ها و خرید اشتراک</a></li>
+                        <li><a href="#apps" class="hover:text-orange-400 transition-colors">راهنمای اتصال پلتفرم‌ها</a></li>
+                    </ul>
+                </div>
+
+                <!-- شبکه‌های اجتماعی و کانال رسمی -->
+                <div>
+                    <h4 class="text-white font-extrabold mb-4">کانال‌ها و پشتیبانی</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li>
+                            <a href="https://t.me/TigerVpnChannel" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-sky-400 hover:text-sky-300 font-bold">
+                                <i class="ph-fill ph-telegram-logo text-xl"></i>
+                                <span dir="ltr">@TigerVpnChannel</span>
+                            </a>
+                        </li>
+                        <li class="text-slate-400 editable-placeholder">
+                            [آیدی پشتیبانی تلگرام: @TigerSupport]
+                        </li>
+                        <li class="text-slate-400 editable-placeholder">
+                            [ایمیل ارتباطی: support@tigervpn.example]
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- بخش اکوسیستم برند -->
+                <div class="bg-slate-900/90 rounded-2xl p-5 border border-slate-800 space-y-3">
+                    <span class="text-xs font-bold text-orange-400">طراحی و توسعه اکوسیستم</span>
+                    <h4 class="text-base font-extrabold text-white">Morteza Abner Ecosystem</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed editable-placeholder">
+                        [متن دلخواه شما: متصل به پلتفرم‌های رسمی و پورتفولیوی Morteza Abner با قابلیت اتصال مستقیم به درگاه پرداخت و پنل مدیریت کاربران.]
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>© ۲۰۲۶ تمامی حقوق برای <strong>تایگر وی‌پی‌ان (Tiger VPN)</strong> محفوظ است.</p>
+                <p>سازگار با موبایل، تبلت، ویندوز و تلویزیون هوشمند (Smart TV)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =================================================================
+         مودال سبد خرید و پیش‌فاکتور آنلاین (آماده اتصال به درگاه پرداخت)
+    ================================================================== -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative animate-[fadeIn_0.2s_ease-out]">
+            <button onclick="closeCheckoutModal()" class="absolute top-5 left-5 w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center transition-colors">
+                <i class="ph-bold ph-x text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center">
+                    <i class="ph-duotone ph-shopping-bag-open text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-slate-900">تکمیل سفارش آنلاین</h3>
+                    <p class="text-xs text-slate-500">تحویل آنی اشتراک پس از پرداخت</p>
+                </div>
+            </div>
+
+            <!-- خلاصه سفارش -->
+            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/70 space-y-2.5 mb-5">
+                <div class="flex justify-between text-sm">
+                    <span class="text-slate-500">سرویس انتخابی:</span>
+                    <span id="modalPlanName" class="font-extrabold text-slate-900">اشتراک ۳ ماهه VIP</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-slate-500">تعداد کاربر همزمان:</span>
+                    <span id="modalUserTier" class="font-bold text-sky-600">تک کاربره (۱ دستگاه)</span>
+                </div>
+                <div class="border-t border-slate-200 pt-2.5 flex justify-between items-center">
+                    <span class="text-sm font-bold text-slate-700">مبلغ قابل پرداخت:</span>
+                    <span id="modalTotalPrice" class="text-xl font-black text-orange-600">۳۵۹,۰۰۰ تومان</span>
+                </div>
+            </div>
+
+            <!-- فرم اطلاعات تحویل -->
+            <form onsubmit="processDemoPayment(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">آیدی تلگرام یا ایمیل (جهت ارسال اشتراک)</label>
+                    <input type="text" required placeholder="مثال: @username یا email@domain.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:border-orange-500 focus:outline-none" dir="ltr">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">کد تخفیف (اختیاری)</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="promoInput" placeholder="مثلاً: TIGER20" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm uppercase focus:border-sky-500 focus:outline-none" dir="ltr">
+                        <button type="button" onclick="applyPromoCode()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-700 shrink-0">اعمال کد</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-2xl font-extrabold text-white bg-gradient-to-r from-sky-600 to-orange-500 hover:from-sky-500 hover:to-orange-600 shadow-lg transition-all flex items-center justify-center gap-2 mt-2">
+                    <i class="ph-bold ph-credit-card text-xl"></i>
+                    <span>اتصال به درگاه پرداخت و دریافت آنی</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- اعلان شناور (Toast Notification) -->
+    <div id="toastBox" class="fixed bottom-6 right-6 z-50 hidden items-center gap-3 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-sm font-bold">
+        <i class="ph-fill ph-check-circle text-emerald-400 text-xl"></i>
+        <span id="toastMessage">عملیات با موفقیت انجام شد</span>
+    </div>
+
+    <!-- =================================================================
+         اسکریپت‌های تعاملی ماژولار (Storefront Logic & UI Interactions)
+    ================================================================== -->
+    <script>
+        // وضعیت فعلی فروشگاه
+        const storeState = {
+            userTier: 1,
+            tierLabels: {
+                1: 'تک کاربره (۱ دستگاه)',
+                2: 'دو کاربره (۲ دستگاه)',
+                3: 'خانواده / VIP (۴ دستگاه)'
+            },
+            prices: {
+                1: { m1: 149000, m3: 359000, m6: 649000 },
+                2: { m1: 219000, m3: 529000, m6: 949000 },
+                3: { m1: 319000, m3: 749000, m6: 1349000 }
+            },
+            currentModalPrice: 359000,
+            promoApplied: false
+        };
+
+        // فرمت اعداد به فارسی با جداکننده هزارگان
+        function formatToman(num) {
+            return num.toLocaleString('fa-IR');
+        }
+
+        // تغییر تعداد کاربران در بخش تعرفه‌ها
+        function setUserTier(tier) {
+            storeState.userTier = tier;
+            document.querySelectorAll('.tier-btn').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-sky-600', 'to-orange-500', 'text-white', 'shadow');
+                btn.classList.add('text-slate-600');
+            });
+            const activeBtn = document.getElementById(`tier-${tier}`);
+            activeBtn.classList.add('bg-gradient-to-r', 'from-sky-600', 'to-orange-500', 'text-white', 'shadow');
+            activeBtn.classList.remove('text-slate-600');
+
+            document.getElementById('price-1m').textContent = formatToman(storeState.prices[tier].m1);
+            document.getElementById('price-3m').textContent = formatToman(storeState.prices[tier].m3);
+            document.getElementById('price-6m').textContent = formatToman(storeState.prices[tier].m6);
+        }
+
+        // باز کردن مودال خرید از روی کارت‌های تعرفه
+        function selectPlanAndCheckout(planTitle, priceElementId) {
+            const tier = storeState.userTier;
+            let rawPrice = storeState.prices[tier].m1;
+            if (priceElementId === 'price-3m') rawPrice = storeState.prices[tier].m3;
+            if (priceElementId === 'price-6m') rawPrice = storeState.prices[tier].m6;
+            openCheckoutModal(planTitle, rawPrice, storeState.tierLabels[tier]);
+        }
+
+        function openCheckoutModal(planName, price, tierLabel) {
+            storeState.currentModalPrice = price;
+            storeState.promoApplied = false;
+            document.getElementById('promoInput').value = '';
+            document.getElementById('modalPlanName').textContent = planName;
+            document.getElementById('modalUserTier').textContent = tierLabel;
+            document.getElementById('modalTotalPrice').textContent = `${formatToman(price)} تومان`;
+
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // اعمال کد تخفیف نمونه
+        function applyPromoCode() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (!code) {
+                showToast('لطفاً ابتدا کد تخفیف را وارد کنید');
+                return;
+            }
+            if (storeState.promoApplied) {
+                showToast('کد تخفیف قبلاً روی این فاکتور اعمال شده است');
+                return;
+            }
+            const discounted = Math.round(storeState.currentModalPrice * 0.85);
+            storeState.currentModalPrice = discounted;
+            storeState.promoApplied = true;
+            document.getElementById('modalTotalPrice').textContent = `${formatToman(discounted)} تومان (۱۵٪ تخفیف)`;
+            showToast('کد تخفیف با موفقیت اعمال شد!');
+        }
+
+        // شبیه‌سازی اتصال به درگاه پرداخت
+        function processDemoPayment(e) {
+            e.preventDefault();
+            closeCheckoutModal();
+            showToast('در حال انتقال به درگاه پرداخت امن (آماده اتصال به API شما)...');
+        }
+
+        // داده‌های تب‌های پلتفرم‌ها
+        const platformData = {
+            ios: {
+                badge: 'پیشنهاد ویژه تایگر برای آیفون و آیپد',
+                title: 'اتصال هوشمند با اپلیکیشن Happ و Streisand',
+                desc: '[متن دلخواه شما: پس از دریافت لینک اشتراک تایگر وی‌پی‌ان، کافی است یکی از برنامه‌های زیر را از اپ‌استور نصب کرده و لینک خود را با یک کلیک وارد کنید.]',
+                apps: [
+                    { name: 'Happ Proxy Utility', sub: 'نسخه رسمی App Store', icon: 'H', color: 'bg-slate-900' },
+                    { name: 'Streisand', sub: 'پشتیبانی از تمام پروتکل‌ها', icon: 'S', color: 'bg-sky-600' }
+                ]
+            },
+            android: {
+                badge: 'سازگار با تمام گوشی‌ها و تبلت‌های اندرویدی',
+                title: 'اتصال سریع با v2rayNG و Hiddify Next',
+                desc: '[متن دلخواه شما: نسخه رسمی برنامه v2rayNG یا Hiddify را نصب کنید و با زدن دکمه + لینک اشتراک تایگر را اضافه نمایید.]',
+                apps: [
+                    { name: 'v2rayNG Official', sub: 'نسخه سبک و پرسرعت اندروید', icon: 'V', color: 'bg-emerald-600' },
+                    { name: 'Hiddify Next', sub: 'رابط کاربری فارسی و هوشمند', icon: 'H', color: 'bg-orange-500' }
+                ]
+            },
+            windows: {
+                badge: 'مخصوص سیستم‌عامل ویندوز ۱۰/۱۱ و مک‌بوک',
+                title: 'اتصال پایدار روی کامپیوتر با v2rayN و Nekoray',
+                desc: '[متن دلخواه شما: مناسب برای ترید، برنامه‌نویسی، گیمینگ و وب‌گردی بدون محدودیت روی دسکتاپ و لپ‌تاپ.]',
+                apps: [
+                    { name: 'v2rayN Windows', sub: 'نسخه ۶۴ بیتی ویندوز', icon: 'W', color: 'bg-sky-700' },
+                    { name: 'Hiddify Desktop', sub: 'سازگار با Windows و macOS', icon: 'D', color: 'bg-slate-800' }
+                ]
+            },
+            tv: {
+                badge: 'پشتیبانی کامل از تلویزیون‌های هوشمند (Android TV / Google TV)',
+                title: 'تماشای یوتیوب و فیلم 4K در تلویزیون با v2rayNG TV',
+                desc: '[متن دلخواه شما: با اسکن QR Code یا وارد کردن لینک اشتراک، اینترنت آزاد را مستقیماً روی تلویزیون هوشمند خانه خود فعال کنید.]',
+                apps: [
+                    { name: 'v2rayNG Android TV', sub: 'بهینه‌سازی شده برای ریموت کنترل', icon: 'TV', color: 'bg-orange-600' },
+                    { name: 'Hiddify TV Edition', sub: 'اتصال تک‌کلیکی روی تلویزیون', icon: 'HT', color: 'bg-cyan-600' }
+                ]
+            }
+        };
+
+        function switchPlatform(key) {
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('bg-slate-900', 'text-white', 'shadow-md');
+                tab.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+            });
+            const activeTab = document.getElementById(`tab-${key}`);
+            activeTab.classList.add('bg-slate-900', 'text-white', 'shadow-md');
+            activeTab.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+
+            const data = platformData[key];
+            const container = document.getElementById('platformContent');
+            container.innerHTML = `
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold">
+                    <i class="ph-fill ph-sparkle"></i>
+                    <span>${data.badge}</span>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900">${data.title}</h3>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed editable-placeholder">${data.desc}</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    ${data.apps.map(app => `
+                        <a href="#" onclick="event.preventDefault(); showToast('لینک دانلود ${app.name} آماده جایگذاری است')" class="p-4 rounded-2xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50/40 transition-all flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-xl ${app.color} text-white flex items-center justify-center font-black">${app.icon}</div>
+                                <div>
+                                    <div class="font-extrabold text-slate-900">${app.name}</div>
+                                    <div class="text-xs text-slate-500">${app.sub}</div>
+                                </div>
+                            </div>
+                            <i class="ph-bold ph-download-simple text-xl text-orange-500"></i>
+                        </a>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // کپی کردن لینک اشتراک
+        function copySubLink() {
+            const text = document.getElementById('demoSubLink').textContent;
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('لینک نمونه اشتراک در حافظه کپی شد!');
+        }
+
+        // نمایش پیام کوتاه (Toast)
+        let toastTimer;
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            document.getElementById('toastMessage').textContent = msg;
+            box.classList.remove('hidden');
+            box.classList.add('flex');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                box.classList.add('hidden');
+                box.classList.remove('flex');
+            }, 3500);
+        }
+
+        // منوی موبایل
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
